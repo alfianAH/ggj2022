@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Box{
@@ -6,8 +7,13 @@ namespace Box{
     public class BoxProperties{
         public BoxPersonality boxPersonality = BoxPersonality.Positive;
         public BoxDirection boxDirection = BoxDirection.Left;
-        public float personalityBar;
-        public Sprite oppositeSprite;
+        public List<BoxSprite> boxSprites;
+    }
+
+    [Serializable]
+    public class BoxSprite{
+        public BoxPersonality boxPersonality;
+        public Sprite personalitySprite;
     }
 
     public enum BoxPersonality{

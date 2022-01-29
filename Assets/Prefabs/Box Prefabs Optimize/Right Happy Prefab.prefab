@@ -448,8 +448,11 @@ MonoBehaviour:
   boxProperties:
     boxPersonality: 0
     boxDirection: 0
-    personalityBar: 0
-    oppositeSprite: {fileID: 21300000, guid: 6557290489c5ba34f9f3f16b8facb6eb, type: 3}
+    boxSprites:
+    - boxPersonality: 0
+      personalitySprite: {fileID: 21300000, guid: 9a4abf4af0336e044bb3fdb09bb782ed, type: 3}
+    - boxPersonality: 1
+      personalitySprite: {fileID: 21300000, guid: 97ca813b332ff3940bdcdd617ede84fb, type: 3}
 --- !u!1 &7192338324490797946
 GameObject:
   m_ObjectHideFlags: 0

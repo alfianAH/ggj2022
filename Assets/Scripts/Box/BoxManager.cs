@@ -5,6 +5,7 @@ namespace Box{
         [Range(0, 10)]
         [SerializeField] private int initialBoxToSpawn;
 
+        private BoxBarMeterManager boxBarMeterManager;
         private BoxSpawnerManager boxSpawnerManager;
 
         private int previousRandomNumber = -1;
@@ -12,6 +13,7 @@ namespace Box{
         private int sameBoxNumber = 0;
 
         private void Awake() {
+            boxBarMeterManager = BoxBarMeterManager.Instance;
             boxSpawnerManager = BoxSpawnerManager.Instance;
         }
 
@@ -33,19 +35,20 @@ namespace Box{
         /// <param name="yAxis"></param>
         private void MakeBox(int randomPersonalityNumber, float xAxis, float yAxis){
             int randomSpriteNumber = Random.Range(0, 2);
+            BoxController boxController = null;
 
             switch(randomPersonalityNumber){
                 case 0: // Happy
                     switch(randomSpriteNumber){
                         case 0: // Left
-                            boxSpawnerManager.GetOrCreateBox(
+                            boxController = boxSpawnerManager.GetOrCreateBox(
                                 new Vector2(xAxis, yAxis),
                                 BoxPersonality.Positive,
                                 BoxDirection.Left
                             );
                             break;
                         case 1: // Right
-                            boxSpawnerManager.GetOrCreateBox(
+                            boxController = boxSpawnerManager.GetOrCreateBox(
                                 new Vector2(xAxis, yAxis),
                                 BoxPersonality.Positive,
                                 BoxDirection.Left
@@ -56,14 +59,14 @@ namespace Box{
                 case 1: // Mad
                     switch(randomSpriteNumber){
                         case 0: // Left
-                            boxSpawnerManager.GetOrCreateBox(
+                            boxController = boxSpawnerManager.GetOrCreateBox(
                                 new Vector2(xAxis, yAxis),
                                 BoxPersonality.Negative,
                                 BoxDirection.Right
                             );
                             break;
                         case 1: // Right
-                            boxSpawnerManager.GetOrCreateBox(
+                            boxController = boxSpawnerManager.GetOrCreateBox(
                                 new Vector2(xAxis, yAxis),
                                 BoxPersonality.Negative,
                                 BoxDirection.Right
@@ -72,6 +75,12 @@ namespace Box{
                     }
                     break;
             }
+
+            if(boxController != null){
+                boxBarMeterManager.GetOrCreateBarMeter(boxController).gameObject.SetActive(true);
+            }
+            else
+                Debug.LogError("Box controller null. Can't get bar meter");
         }
 
         /// <summary>

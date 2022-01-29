@@ -25,5 +25,20 @@ namespace Box
         public void SetPosition(Vector2 position){
             transform.position = position;
         }
+
+        /// <summary>
+        /// Change box personality
+        /// </summary>
+        /// <param name="boxPersonality"></param>
+        public void ChangePersonality(BoxPersonality boxPersonality){
+            boxProperties.boxPersonality = boxPersonality;
+            // Check personality sprite
+            foreach(BoxSprite boxSprite in boxProperties.boxSprites){
+                if(boxSprite.boxPersonality == boxPersonality){
+                    boxSpriteRenderer.sprite = boxSprite.personalitySprite;
+                    break;
+                }
+            }
+        }
     }
 }
