@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 367b0cc5d70fd2c48b0ebc62eead5769
+=======
+guid: 3c6f00d39e9e5ed489deeec54bdd8ac5
+>>>>>>> button-action
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
