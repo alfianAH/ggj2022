@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Box{
     public class BoxSpawnerManager : SingletonBaseClass<BoxSpawnerManager> {
-        [SerializeField] private BoxController boxControllerPrefab;
+        [SerializeField] private List<BoxPrefabs> boxControllerPrefabs;
         [Range(0, 10)]
         [SerializeField] private int initialBoxes;
 
@@ -21,11 +22,16 @@ namespace Box{
         /// Create number of boxes
         /// </summary>
         /// <param name="numberOfBoxes">Number of boxes</param>
-        /// <param name="setActive">Box's active property</param>
         private void AddIntoPool(int numberOfBoxes){
-            for (int i = 0; i < numberOfBoxes; i++){
-                BoxController boxController = Instantiate(boxControllerPrefab, transform);
-                boxController.gameObject.SetActive(false);
+            foreach(BoxPrefabs boxControllerPrefab in boxControllerPrefabs){
+                foreach(BoxController boxController in boxControllerPrefab.boxControllers){
+                    for (int i = 0; i < numberOfBoxes; i++)
+                    {
+                        BoxController newBox = Instantiate(boxController, transform);
+                        newBox.gameObject.SetActive(false);
+                        boxPool.Add(newBox);
+                    }
+                }
             }
         }
 
@@ -33,18 +39,39 @@ namespace Box{
         /// Get box controller from pool or create new one
         /// </summary>
         /// <param name="position">Box position</param>
+        /// <param name="boxPersonality">Box personality</param>
+        /// <param name="boxDirection">Box direction</param>
         /// <returns>Box Controller</returns>
-        public BoxController GetOrCreateBox(Vector2 position){
+        public BoxController GetOrCreateBox(Vector2 position, 
+            BoxPersonality boxPersonality, BoxDirection boxDirection){
+            // Search in box pool
             BoxController boxController = boxPool.Find(box =>
-                !box.gameObject.activeInHierarchy);
+                !box.gameObject.activeInHierarchy && 
+                box.BoxProperties.boxPersonality == boxPersonality &&
+                box.BoxProperties.boxDirection == boxDirection);
 
             if(boxController == null){
-                boxController = Instantiate(boxControllerPrefab, transform);
-                boxPool.Add(boxController);
+                // Search the same prefab
+                foreach (BoxPrefabs boxControllerPrefab in boxControllerPrefabs)
+                {
+                    foreach (BoxController box in boxControllerPrefab.boxControllers)
+                    {
+                        if(box.BoxProperties.boxPersonality == boxPersonality &&
+                            box.BoxProperties.boxDirection == boxDirection){
+                            // Duplicate the box
+                            boxController = Instantiate(box, transform);
+                            boxPool.Add(boxController);
+
+                            break;
+                        }
+                    }
+                }
             }
+
             boxQueue.Enqueue(boxController);
             boxController.gameObject.SetActive(true);
             boxController.SetPosition(position);
+            Debug.Log("Get");
             return boxController;
         }
 
@@ -55,5 +82,11 @@ namespace Box{
             BoxController boxController = boxQueue.Dequeue();
             boxController.gameObject.SetActive(false);
         }
+    }
+
+    [Serializable]
+    public class BoxPrefabs{
+        public string name;
+        public List<BoxController> boxControllers;
     }
 }

@@ -5,10 +5,11 @@ namespace Box
     public class BoxController : MonoBehaviour
     {
         [SerializeField] private BoxProperties boxProperties;
-        [SerializeField] private SpriteRenderer boxSpriteRenderer;
+        private SpriteRenderer boxSpriteRenderer;
 
         #region Setter and Getter
 
+        public BoxProperties BoxProperties => boxProperties;
         public SpriteRenderer BoxSpriteRenderer => boxSpriteRenderer;
 
         #endregion

@@ -1,15 +1,14 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
+using Utils;
 
 namespace Box{
     public class BoxManager : SingletonBaseClass<BoxManager> {
         private BoxSpawnerManager boxSpawnerManager;
         [Range(0, 10)]
         [SerializeField] private int initialBoxToSpawn;
-        [SerializeField] private int sameBoxNumber;
         [SerializeField] private float[] xAxis;
-
-        private int previouseRandomNumber = -1;
-        private readonly int limitSameBox = 2;
 
         private void Awake() {
             boxSpawnerManager = BoxSpawnerManager.Instance;
@@ -18,44 +17,61 @@ namespace Box{
         private void Start() {
             // Generate initial boxes
             for (int i = 0; i < initialBoxToSpawn; i++){
-                float xAxis = this.xAxis[RandomNumber()];
+                int randomNumber = RandomNumber.GenerateRandomNumber();
+                float xAxis = this.xAxis[randomNumber];
                 float yAxis = i;
 
-                MakeBox(xAxis, yAxis);
+                MakeBox(randomNumber, xAxis, yAxis);
             }
         }
 
         /// <summary>
         /// Make box
         /// </summary>
+        /// <param name="randomNumber"></param>
         /// <param name="xAxis"></param>
         /// <param name="yAxis"></param>
-        private void MakeBox(float xAxis, float yAxis){
-            boxSpawnerManager.GetOrCreateBox(new Vector2(xAxis, yAxis));
-        }
+        private void MakeBox(int randomNumber, float xAxis, float yAxis){
+            int randomSpriteNumber = UnityEngine.Random.Range(0, 2);
 
-        /// <summary>
-        /// Generate Random number for box with limit 
-        /// </summary>
-        /// <returns>Random number between 0-1</returns>
-        private int RandomNumber(){
-            int randomNumber = Random.Range(0, 2);
-                
-            if(previouseRandomNumber == randomNumber){
-                sameBoxNumber++;
-
-                // If same box number reach limit, ...
-                if(sameBoxNumber == limitSameBox){
-                    while(previouseRandomNumber == randomNumber){
-                        randomNumber = Random.Range(0, 2);
+            switch(randomNumber){
+                case 0: // Left
+                    switch(randomSpriteNumber){
+                        case 0: // Happy
+                            boxSpawnerManager.GetOrCreateBox(
+                                new Vector2(xAxis, yAxis),
+                                BoxPersonality.Positive,
+                                BoxDirection.Left
+                            );
+                            break;
+                        case 1: // Mad
+                            boxSpawnerManager.GetOrCreateBox(
+                                new Vector2(xAxis, yAxis),
+                                BoxPersonality.Negative,
+                                BoxDirection.Left
+                            );
+                            break;
                     }
-                }
-            } else{
-                sameBoxNumber = 0;
-                previouseRandomNumber = randomNumber;
+                    break;
+                case 1: // Right
+                    switch(randomSpriteNumber){
+                        case 0: // Happy
+                            boxSpawnerManager.GetOrCreateBox(
+                                new Vector2(xAxis, yAxis),
+                                BoxPersonality.Positive,
+                                BoxDirection.Right
+                            );
+                            break;
+                        case 1: // Mad
+                            boxSpawnerManager.GetOrCreateBox(
+                                new Vector2(xAxis, yAxis),
+                                BoxPersonality.Negative,
+                                BoxDirection.Right
+                            );
+                            break;
+                    }
+                    break;
             }
-
-            return randomNumber;
         }
     }
 }
