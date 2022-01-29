@@ -8,6 +8,7 @@ namespace UserInterfaces
     {
         private BoxSpawnerManager boxSpawnerManager;
         private GameplayManager gameplayManager;
+        private HealthManager healthManager;
         private ScoreManager scoreManager;
 
         private int combo;
@@ -15,6 +16,7 @@ namespace UserInterfaces
         private void Awake() {
             boxSpawnerManager = BoxSpawnerManager.Instance;
             gameplayManager = GameplayManager.Instance;
+            healthManager = HealthManager.Instance;
             scoreManager = ScoreManager.Instance;
         }
         
@@ -31,10 +33,11 @@ namespace UserInterfaces
                 scoreManager.ScoreValue *= combo;
 
                 // Destroy cube
-
+                boxSpawnerManager.RemoveBox();
             } else {
                 // Reduce heart by 1
                 combo = 0;
+                healthManager.ReduceHealth();
             }
         }
     }

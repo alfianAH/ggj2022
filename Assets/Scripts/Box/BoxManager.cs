@@ -30,7 +30,7 @@ namespace Box{
         /// <param name="xAxis"></param>
         /// <param name="yAxis"></param>
         private void MakeBox(int randomNumber, float xAxis, float yAxis){
-            int randomSpriteNumber = UnityEngine.Random.Range(0, 2);
+            int randomSpriteNumber = Random.Range(0, 2);
 
             switch(randomNumber){
                 case 0: // Left

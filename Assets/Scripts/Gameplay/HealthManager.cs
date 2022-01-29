@@ -38,14 +38,13 @@ namespace Gameplay
         /// </summary>
         public void ReduceHealth(){
             health -= 1;
-            healthIcons.ForEach(healthIcon =>
-            {
+            foreach(Image healthIcon in healthIcons){
                 if (healthIcon.sprite == healthIconFull)
                 {
                     healthIcon.sprite = healthIconEmpty;
-                    return;
+                    break;
                 }
-            });
+            }
         }
     }
 }

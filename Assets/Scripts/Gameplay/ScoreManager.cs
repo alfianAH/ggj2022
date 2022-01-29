@@ -21,5 +21,9 @@ namespace Gameplay
                 scoreText.text = score.ToString();
             }
         }
+
+        private void Awake() {
+            ScoreValue = 0;
+        }
     }
 }
