@@ -6,8 +6,6 @@ namespace Box{
         [SerializeField] private BoxController boxControllerPrefab;
         [Range(0, 10)]
         [SerializeField] private int initialBoxes;
-        [Range(0, 10)]
-        [SerializeField] private int spareBoxes;
 
         private List<BoxController> boxPool;
         private Queue<BoxController> boxQueue;
@@ -16,8 +14,7 @@ namespace Box{
             boxPool = new List<BoxController>();
             boxQueue = new Queue<BoxController>();
 
-            CreateBoxes(initialBoxes, true);
-            CreateBoxes(spareBoxes, false);
+            AddIntoPool(initialBoxes);
         }
         
         /// <summary>
@@ -25,20 +22,19 @@ namespace Box{
         /// </summary>
         /// <param name="numberOfBoxes">Number of boxes</param>
         /// <param name="setActive">Box's active property</param>
-        private void CreateBoxes(int numberOfBoxes, bool setActive){
+        private void AddIntoPool(int numberOfBoxes){
             for (int i = 0; i < numberOfBoxes; i++){
                 BoxController boxController = Instantiate(boxControllerPrefab, transform);
-                boxController.gameObject.SetActive(setActive);
-                if(setActive)
-                    boxQueue.Enqueue(boxController);
+                boxController.gameObject.SetActive(false);
             }
         }
 
         /// <summary>
         /// Get box controller from pool or create new one
         /// </summary>
+        /// <param name="position">Box position</param>
         /// <returns>Box Controller</returns>
-        private BoxController GetOrCreateBox(){
+        public BoxController GetOrCreateBox(Vector2 position){
             BoxController boxController = boxPool.Find(box =>
                 !box.gameObject.activeInHierarchy);
 
@@ -46,9 +42,18 @@ namespace Box{
                 boxController = Instantiate(boxControllerPrefab, transform);
                 boxPool.Add(boxController);
             }
-
-            boxController.gameObject.SetActive(false);
+            boxQueue.Enqueue(boxController);
+            boxController.gameObject.SetActive(true);
+            boxController.SetPosition(position);
             return boxController;
+        }
+
+        /// <summary>
+        /// Remove box from queue
+        /// </summary>
+        public void RemoveBox(){
+            BoxController boxController = boxQueue.Dequeue();
+            boxController.gameObject.SetActive(false);
         }
     }
 }
