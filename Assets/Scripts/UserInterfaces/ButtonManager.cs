@@ -6,6 +6,7 @@ namespace UserInterfaces
 {
     public class ButtonManager : SingletonBaseClass<ButtonManager>
     {
+        private BoxManager boxManager;
         private BoxSpawnerManager boxSpawnerManager;
         private GameplayManager gameplayManager;
         private HealthManager healthManager;
@@ -14,6 +15,7 @@ namespace UserInterfaces
         private int combo;
 
         private void Awake() {
+            boxManager = BoxManager.Instance;
             boxSpawnerManager = BoxSpawnerManager.Instance;
             gameplayManager = GameplayManager.Instance;
             healthManager = HealthManager.Instance;
@@ -33,7 +35,7 @@ namespace UserInterfaces
                 scoreManager.ScoreValue *= combo;
 
                 // Destroy cube
-                boxSpawnerManager.RemoveBox();
+                boxManager.RemoveBox();
             } else {
                 // Reduce heart by 1
                 combo = 0;

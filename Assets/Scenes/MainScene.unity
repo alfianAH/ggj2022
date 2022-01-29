@@ -598,13 +598,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boxControllerPrefabs:
-  - name: left
-    boxControllers:
-    - {fileID: 3542903133957683659, guid: 12e26ce3dc204954bb261897206f0924, type: 3}
-    - {fileID: 953497288990590745, guid: 517b024c05fc1fc49bedd217973e987b, type: 3}
-  - name: right
+  - name: happy
     boxControllers:
     - {fileID: 2293533153837169424, guid: f88d258baefa6fc42af0aec2bbfcb1eb, type: 3}
+    - {fileID: 3542903133957683659, guid: 12e26ce3dc204954bb261897206f0924, type: 3}
+  - name: mad
+    boxControllers:
+    - {fileID: 953497288990590745, guid: 517b024c05fc1fc49bedd217973e987b, type: 3}
     - {fileID: 8215509632798575159, guid: c7f3606382cbdae4fa3cbcadfb012434, type: 3}
   initialBoxes: 9
 --- !u!4 &1627388302
@@ -634,9 +634,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialBoxToSpawn: 9
-  xAxis:
-  - -0.1
-  - 0.1
 --- !u!1 &1815897015
 GameObject:
   m_ObjectHideFlags: 0

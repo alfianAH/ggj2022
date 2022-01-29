@@ -87,14 +87,6 @@ namespace Box{
                 boxControllers[i].BoxSpriteRenderer.sortingOrder = i;
             }
         }
-
-        /// <summary>
-        /// Remove box from queue
-        /// </summary>
-        public void RemoveBox(){
-            BoxController boxController = boxQueue.Dequeue();
-            boxController.gameObject.SetActive(false);
-        }
     }
 
     [Serializable]
