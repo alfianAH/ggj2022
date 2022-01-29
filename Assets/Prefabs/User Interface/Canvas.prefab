@@ -273,7 +273,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 5
-  m_Spacing: 15
+  m_Spacing: -20
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
@@ -891,7 +891,6 @@ GameObject:
   - component: {fileID: 7622986867191592303}
   - component: {fileID: 7622986867191592302}
   - component: {fileID: 7622986867191592301}
-  - component: {fileID: 7622986867191592304}
   m_Layer: 5
   m_Name: RemoveBtn
   m_TagString: Untagged
@@ -1001,7 +1000,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7622986867191592304}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: RemoveButton, Assembly-CSharp
         m_MethodName: RemoveBox
         m_Mode: 2
@@ -1013,18 +1012,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &7622986867191592304
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7622986867191592299}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e40ee17950fa5dc4f8b4944f1fc526f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7622986867211779055
 GameObject:
   m_ObjectHideFlags: 0

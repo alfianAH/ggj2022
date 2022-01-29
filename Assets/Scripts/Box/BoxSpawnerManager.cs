@@ -11,6 +11,8 @@ namespace Box{
         private List<BoxController> boxPool;
         private Queue<BoxController> boxQueue;
 
+        public Queue<BoxController> BoxQueue => boxQueue;
+
         private void Awake() {
             boxPool = new List<BoxController>();
             boxQueue = new Queue<BoxController>();
