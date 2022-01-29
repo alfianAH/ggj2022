@@ -71,8 +71,19 @@ namespace Box{
             boxQueue.Enqueue(boxController);
             boxController.gameObject.SetActive(true);
             boxController.SetPosition(position);
-            Debug.Log("Get");
+            SetBoxOrder();
             return boxController;
+        }
+
+        /// <summary>
+        /// Set box order for box controller
+        /// </summary>
+        private void SetBoxOrder(){
+            BoxController[] boxControllers = boxQueue.ToArray();
+
+            for (int i = 0; i < boxControllers.Length; i++){
+                boxControllers[i].BoxSpriteRenderer.sortingOrder = i;
+            }
         }
 
         /// <summary>

@@ -25,13 +25,5 @@ namespace Box
         public void SetPosition(Vector2 position){
             transform.position = position;
         }
-        
-        /// <summary>
-        /// Set box sprite according to box personality
-        /// </summary>
-        /// <param name="sprite"></param>
-        public void SetBoxSprite(Sprite sprite){
-            boxSpriteRenderer.sprite = sprite;
-        }
     }
 }
