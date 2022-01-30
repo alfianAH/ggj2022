@@ -378,6 +378,7 @@ MonoBehaviour:
       personalitySprite: {fileID: 21300000, guid: 4099b2ce859793e44803f97cdd36c811, type: 3}
     - boxPersonality: 1
       personalitySprite: {fileID: 21300000, guid: 6557290489c5ba34f9f3f16b8facb6eb, type: 3}
+    bottomBone: {fileID: 7541963415288764702}
 --- !u!1 &7541963415288764676
 GameObject:
   m_ObjectHideFlags: 0

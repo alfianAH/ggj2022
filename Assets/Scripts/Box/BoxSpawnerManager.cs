@@ -84,7 +84,7 @@ namespace Box{
             BoxController[] boxControllers = boxQueue.ToArray();
 
             for (int i = 0; i < boxControllers.Length; i++){
-                boxControllers[i].BoxSpriteRenderer.sortingOrder = i;
+                boxControllers[i].BoxSpriteRenderer.sortingOrder = i+2;
             }
         }
     }

@@ -8,20 +8,12 @@ namespace Box
     {
         public BoxController boxController;
         [SerializeField] private float speed = 0.2f;
-        private RectTransform parent, rectTransform;
-        private Canvas canvas;
-        private Camera mainCamera;
         private bool goingUp;
         private ScoreManager scoreManager;
         private Slider barSlider;
         
         private void Awake() {
             scoreManager = ScoreManager.Instance;
-
-            canvas = GetComponentInParent<Canvas>();
-            mainCamera = Camera.main;
-            rectTransform = GetComponent<RectTransform>();
-            parent = GetComponentInParent<RectTransform>();
             barSlider = GetComponent<Slider>();
         }
 
@@ -32,10 +24,11 @@ namespace Box
         }
 
         private void Update() {
+            // If slide value is 0, change to mad
             if(barSlider.value <= 0f){
                 boxController.ChangePersonality(BoxPersonality.Negative);
                 goingUp = true;
-            } else if (barSlider.value >= 1f){
+            } else if (barSlider.value >= 1f){ // If slide value is 1, change to happy
                 boxController.ChangePersonality(BoxPersonality.Positive);
                 goingUp = false;
             }
@@ -46,29 +39,7 @@ namespace Box
                 barSlider.value -= speed * Time.deltaTime;
             }
 
-            HandlePosition(boxController.transform.position);
-
             CheckPoint();
-        }
-
-        /// <summary>
-        /// Handle interaction button position
-        /// Convert world space position to canvas position 
-        /// </summary>
-        /// <param name="targetPosition">World space position</param>
-        private void HandlePosition(Vector3 targetPosition)
-        {
-            Vector2 actorScreenPosition = mainCamera.WorldToScreenPoint(targetPosition);
-            // Make it to the right a bit, so it doesn't cover the actor
-            actorScreenPosition.x += 50;
-            
-            // Set anchored position for interaction button
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                parent, actorScreenPosition,
-                canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : mainCamera,
-                out var anchoredPosition);
-
-            rectTransform.anchoredPosition = anchoredPosition;
         }
         
         /// <summary>

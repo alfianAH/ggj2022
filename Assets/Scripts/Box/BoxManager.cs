@@ -9,7 +9,7 @@ namespace Box{
         private BoxSpawnerManager boxSpawnerManager;
 
         private int previousRandomNumber = -1;
-        private readonly int limitSameBox = 3;
+        private readonly int limitSameBox = 2;
         private int sameBoxNumber = 0;
 
         private void Awake() {
@@ -77,7 +77,9 @@ namespace Box{
             }
 
             if(boxController != null){
-                boxBarMeterManager.GetOrCreateBarMeter(boxController).gameObject.SetActive(true);
+                BoxBarMeter boxBarMeter = boxBarMeterManager.GetOrCreateBarMeter(boxController);
+                boxBarMeter.gameObject.SetActive(true);
+                boxController.BoxProperties.boxBarMeter = boxBarMeter;
             }
             else
                 Debug.LogError("Box controller null. Can't get bar meter");
@@ -88,6 +90,8 @@ namespace Box{
         /// </summary>
         public void RemoveBox(){
             BoxController boxController = boxSpawnerManager.BoxQueue.Dequeue();
+            boxController.BoxProperties.boxBarMeter.gameObject.SetActive(false);
+            boxController.BoxProperties.boxBarMeter = null;
             boxController.gameObject.SetActive(false);
             int randomNumber = GenerateRandomNumber();
             float yAxis = 6;

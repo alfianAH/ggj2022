@@ -7,7 +7,9 @@ namespace Box{
     public class BoxProperties{
         public BoxPersonality boxPersonality = BoxPersonality.Positive;
         public BoxDirection boxDirection = BoxDirection.Left;
+        public BoxBarMeter boxBarMeter;
         public List<BoxSprite> boxSprites;
+        public Transform bottomBone;
     }
 
     [Serializable]
