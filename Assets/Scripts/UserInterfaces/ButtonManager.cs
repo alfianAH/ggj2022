@@ -31,7 +31,7 @@ namespace UserInterfaces
             if(targetPersonality == chosenPersonality){
                 // Add score
                 combo += 1;
-                scoreManager.UpdateScore(scoreManager.ScoreValue + 10*combo);
+                scoreManager.UpdateScore(scoreManager.ScoreValue + 2*combo);
                 UltimateBox.Instance.AddPower(combo);
                 // Destroy cube
                 boxManager.RemoveBox();

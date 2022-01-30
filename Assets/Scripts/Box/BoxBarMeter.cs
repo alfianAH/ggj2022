@@ -56,13 +56,13 @@ namespace Box
         /// Check point for score manager
         /// </summary>
         private void CheckPoint(){
-            if(scoreManager.ScoreValue >= 1500){
+            if(scoreManager.ScoreValue >= 5000){
                 speed = 2f;
-            } else if(scoreManager.ScoreValue >= 1000){
+            } else if(scoreManager.ScoreValue >= 4000){
                 speed = 1f;
-            } else if(scoreManager.ScoreValue >= 500){
+            } else if(scoreManager.ScoreValue >= 2000){
                 speed = 0.8f;
-            } else if(scoreManager.ScoreValue >= 200){
+            } else if(scoreManager.ScoreValue >= 1500){
                 speed = 0.5f;
             }
         }
