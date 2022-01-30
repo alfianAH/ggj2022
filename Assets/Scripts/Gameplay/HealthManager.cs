@@ -9,6 +9,7 @@ namespace Gameplay
         [SerializeField] private Image healthIcon;
         [SerializeField] private Transform panelHealth;
         [SerializeField] private Sprite healthIconFull, healthIconEmpty;
+        [SerializeField] private GameObject gameOverObject;
 
         [SerializeField] private int health = 3;
 
@@ -44,6 +45,11 @@ namespace Gameplay
                     healthIcon.sprite = healthIconEmpty;
                     break;
                 }
+            }
+
+            if(health == 0){
+                gameOverObject.SetActive(true);
+                ScoreManager.Instance.UpdateHighScore();
             }
         }
     }

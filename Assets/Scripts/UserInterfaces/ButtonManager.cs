@@ -32,7 +32,7 @@ namespace UserInterfaces
             if(targetPersonality == chosenPersonality){
                 // Add score
                 combo += 1;
-                scoreManager.ScoreValue *= combo;
+                scoreManager.UpdateScore(scoreManager.ScoreValue + 10*combo);
 
                 // Destroy cube
                 boxManager.RemoveBox();
