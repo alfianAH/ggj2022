@@ -1,4 +1,5 @@
 using UnityEngine;
+using Utils;
 
 namespace Box{
     public class BoxManager : SingletonBaseClass<BoxManager> {
@@ -7,24 +8,25 @@ namespace Box{
 
         private BoxBarMeterManager boxBarMeterManager;
         private BoxSpawnerManager boxSpawnerManager;
-
-        private int previousRandomNumber = -1;
-        private readonly int limitSameBox = 2;
-        private int sameBoxNumber = 0;
+        private RandomNumber directionRandomNumber, personalityRandomNumber;
 
         private void Awake() {
             boxBarMeterManager = BoxBarMeterManager.Instance;
             boxSpawnerManager = BoxSpawnerManager.Instance;
+            directionRandomNumber = new RandomNumber();
+            personalityRandomNumber = new RandomNumber();
         }
 
         private void Start() {
             // Generate initial boxes
             for (int i = 0; i < initialBoxToSpawn; i++){
-                int randomNumber = GenerateRandomNumber();
-                float yAxis = i;
-
-                MakeBox(randomNumber, 0, yAxis);
+                GenerateRandomBox(i);
             }
+        }
+
+        private void GenerateRandomBox(float yAxis){
+            int randomNumber = personalityRandomNumber.GenerateRandomNumber();
+            MakeBox(randomNumber, 0, yAxis);
         }
 
         /// <summary>
@@ -34,7 +36,7 @@ namespace Box{
         /// <param name="xAxis"></param>
         /// <param name="yAxis"></param>
         private void MakeBox(int randomPersonalityNumber, float xAxis, float yAxis){
-            int randomSpriteNumber = Random.Range(0, 2);
+            int randomSpriteNumber = directionRandomNumber.GenerateRandomNumber();
             BoxController boxController = null;
 
             switch(randomPersonalityNumber){
@@ -92,43 +94,8 @@ namespace Box{
             BoxController boxController = boxSpawnerManager.BoxQueue.Dequeue();
             boxController.BoxProperties.boxBarMeter.gameObject.SetActive(false);
             boxController.BoxProperties.boxBarMeter = null;
-            boxController.gameObject.SetActive(false);
-            int randomNumber = GenerateRandomNumber();
-            float yAxis = 6;
-
-            MakeBox(randomNumber, 0, yAxis);
-        }
-
-        /// <summary>
-        /// Generate Random number for box with limit 
-        /// </summary>
-        /// <returns>Random number between 0-1</returns>
-        private int GenerateRandomNumber()
-        {
-            int randomNumber = Random.Range(0, 2);
-            
-            if (previousRandomNumber == randomNumber)
-            {
-                sameBoxNumber++;
-
-                // If same box number reach limit, ...
-                if (sameBoxNumber == limitSameBox)
-                {
-                    while (previousRandomNumber == randomNumber)
-                    {
-                        randomNumber = Random.Range(0, 2);
-                    }
-                    previousRandomNumber = randomNumber;
-                    sameBoxNumber = 0;
-                }
-            }
-            else
-            {
-                sameBoxNumber = 0;
-                previousRandomNumber = randomNumber;
-            }
-
-            return randomNumber;
+            Destroy(boxController.gameObject);
+            GenerateRandomBox(6);
         }
     }
 }

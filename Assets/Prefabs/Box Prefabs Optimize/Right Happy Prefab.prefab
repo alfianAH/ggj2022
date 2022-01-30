@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7192338322742884729}
   - component: {fileID: 7192338322742884674}
-  - component: {fileID: 7192338322742884678}
   - component: {fileID: 7192338322742884679}
   - component: {fileID: 7192338322742884676}
   - component: {fileID: 7192338322742884677}
@@ -56,22 +55,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 5
---- !u!58 &7192338322742884678
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7192338322742884675}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.2
 --- !u!231 &7192338322742884679
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -176,7 +159,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.18231505}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -187,7 +170,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4, y: 0.15}
+  m_Size: {x: 4, y: 1.035534}
   m_EdgeRadius: 0
 --- !u!1 &7192338323491410079
 GameObject:
@@ -448,6 +431,7 @@ MonoBehaviour:
   boxProperties:
     boxPersonality: 0
     boxDirection: 0
+    boxBarMeter: {fileID: 0}
     boxSprites:
     - boxPersonality: 0
       personalitySprite: {fileID: 21300000, guid: 9a4abf4af0336e044bb3fdb09bb782ed, type: 3}
@@ -464,7 +448,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7192338324490797949}
   - component: {fileID: 7192338324490797936}
-  - component: {fileID: 7192338324490797937}
   - component: {fileID: 7192338324490797950}
   - component: {fileID: 7192338324490797951}
   - component: {fileID: 7192338324490797948}
@@ -510,22 +493,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 5
---- !u!58 &7192338324490797937
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7192338324490797946}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.2
 --- !u!231 &7192338324490797950
 SpringJoint2D:
   m_ObjectHideFlags: 0

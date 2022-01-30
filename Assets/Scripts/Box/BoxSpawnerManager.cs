@@ -17,7 +17,7 @@ namespace Box{
             boxPool = new List<BoxController>();
             boxQueue = new Queue<BoxController>();
 
-            AddIntoPool(initialBoxes);
+            // AddIntoPool(initialBoxes);
         }
         
         /// <summary>
@@ -46,35 +46,34 @@ namespace Box{
         /// <returns>Box Controller</returns>
         public BoxController GetOrCreateBox(Vector2 position, 
             BoxPersonality boxPersonality, BoxDirection boxDirection){
-            // Search in box pool
-            BoxController boxController = boxPool.Find(box =>
-                !box.gameObject.activeInHierarchy && 
-                box.BoxProperties.boxPersonality == boxPersonality &&
-                box.BoxProperties.boxDirection == boxDirection);
+            BoxController boxController = null;
 
-            if(boxController == null){
-                // Search the same prefab
-                foreach (BoxPrefabs boxControllerPrefab in boxControllerPrefabs)
+            // Search the same prefab
+            foreach (BoxPrefabs boxControllerPrefab in boxControllerPrefabs)
+            {
+                foreach (BoxController box in boxControllerPrefab.boxControllers)
                 {
-                    foreach (BoxController box in boxControllerPrefab.boxControllers)
-                    {
-                        if(box.BoxProperties.boxPersonality == boxPersonality &&
-                            box.BoxProperties.boxDirection == boxDirection){
-                            // Duplicate the box
-                            boxController = Instantiate(box, transform);
-                            boxPool.Add(boxController);
+                    if(box.BoxProperties.boxPersonality == boxPersonality &&
+                        box.BoxProperties.boxDirection == boxDirection){
+                        // Duplicate the box
+                        boxController = Instantiate(box, transform);
+                        boxPool.Add(boxController);
 
-                            break;
-                        }
+                        break;
                     }
                 }
             }
 
-            boxQueue.Enqueue(boxController);
-            boxController.gameObject.SetActive(true);
-            boxController.SetPosition(position);
-            SetBoxOrder();
-            return boxController;
+            if(boxController != null){
+                boxQueue.Enqueue(boxController);
+                boxController.gameObject.SetActive(true);
+                boxController.SetPosition(position);
+                SetBoxOrder();
+                return boxController;
+            } else{
+                Debug.LogError("Box controller null");
+                return null;
+            }
         }
 
         /// <summary>
@@ -84,7 +83,7 @@ namespace Box{
             BoxController[] boxControllers = boxQueue.ToArray();
 
             for (int i = 0; i < boxControllers.Length; i++){
-                boxControllers[i].BoxSpriteRenderer.sortingOrder = i+2;
+                boxControllers[i].BoxSpriteRenderer.sortingOrder = i;
             }
         }
     }
