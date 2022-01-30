@@ -1,59 +1,94 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UltimateBox : MonoBehaviour
+namespace Box
 {
-    public float requestedPower = 20;
-    public Slider power;
-
-    [SerializeField]
-    private float currentPower;
-    // Start is called before the first frame update
-    void Start()
+    public class UltimateBox : SingletonBaseClass<UltimateBox>
     {
-        currentPower = 0;
-        //StartCoroutine(testCombo());
-    }
+        [Range(0, 20)]
+        [SerializeField] private float ultiDuration = 10f;
+        [SerializeField] private float requestedPower = 20;
+        [SerializeField] private float currentPower;
+        
+        [SerializeField] private Slider power;
+        [SerializeField] private Button ultiButton;
 
-    // Update is called once per frame
-    void Update()
-    {
-        power.value = currentPower / requestedPower;    
-    }
+        private bool ultiOnGoing;
 
-    /// <summary>
-    /// add Power smoothly
-    /// </summary>
-    /// <param name="power">adding power</param>
-    public void addPower(float power)
-    {
-        StartCoroutine(changePower());
+        public bool UltiOnGoing => ultiOnGoing;
 
-        IEnumerator changePower()
+        // Start is called before the first frame update
+        private void Start()
         {
-            float goal = (currentPower + power);
+            currentPower = 0;
+        }
+
+        // Update is called once per frame
+        private void Update()
+        {
+            power.value = currentPower / requestedPower;
+
+            if(power.value >= 1f){
+                ultiButton.interactable = true;
+            } else{
+                ultiButton.interactable = false;
+            }
+        }
+
+        /// <summary>
+        /// add Power smoothly
+        /// </summary>
+        /// <param name="power">adding power</param>
+        public void AddPower(float power)
+        {
+            if(ultiOnGoing) return;
+
+            if(currentPower >= requestedPower) {
+                currentPower = requestedPower;
+                return;
+            }
+            StartCoroutine(IncreasePower(power));
+        }
+
+        private IEnumerator IncreasePower(float power)
+        {
+            float goal = currentPower + power;
             float t = 0;
             while (currentPower < goal)
+            {
+                currentPower = Mathf.MoveTowards(currentPower, goal, t);
+                t += Time.deltaTime;
+
+                if(currentPower >= requestedPower) {
+                    currentPower = requestedPower;
+                    yield break;
+                }
+                yield return null;
+            }
+        }
+
+        private IEnumerator DecreasePower(float power)
+        {
+            float goal = currentPower + power;
+            float t = 0;
+            while (currentPower > goal)
             {
                 currentPower = Mathf.MoveTowards(currentPower, goal, t);
                 t += Time.deltaTime;
                 yield return null;
             }
         }
-    } 
 
-    
+        public IEnumerator StartUltimate(){
+            ultiOnGoing = true;
 
-    IEnumerator testCombo()
-    {
-        float t = 0;
-        while (currentPower < requestedPower)
-        {
-            currentPower = Mathf.MoveTowards(currentPower, requestedPower, t);
-            t += Time.deltaTime;
-            yield return null;
+            while(currentPower != 0){
+                currentPower -= ultiDuration / requestedPower;
+                yield return new WaitForSeconds(0.3f);
+            }
+
+            ultiOnGoing = false;
         }
     }
 }

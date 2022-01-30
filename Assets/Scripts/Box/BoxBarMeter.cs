@@ -11,9 +11,13 @@ namespace Box
         private bool goingUp;
         private ScoreManager scoreManager;
         private Slider barSlider;
-        
+        private UltimateBox ultimate;
+        private GameplayManager gameplayManager;
+
         private void Awake() {
             scoreManager = ScoreManager.Instance;
+            ultimate = UltimateBox.Instance;
+            gameplayManager = GameplayManager.Instance;
             barSlider = GetComponent<Slider>();
         }
 
@@ -33,10 +37,16 @@ namespace Box
                 goingUp = false;
             }
 
-            if(goingUp){
-                barSlider.value += speed * Time.deltaTime;
+            if(ultimate.UltiOnGoing){
+                boxController.ChangePersonality(gameplayManager.chosenBoxPersonality);
+                barSlider.value = boxController.BoxProperties.boxPersonality == BoxPersonality.Negative
+                    ? 0f : 1f;
             } else{
-                barSlider.value -= speed * Time.deltaTime;
+                if(goingUp){
+                    barSlider.value += speed * Time.deltaTime;
+                } else{
+                    barSlider.value -= speed * Time.deltaTime;
+                }
             }
 
             CheckPoint();
@@ -46,13 +56,13 @@ namespace Box
         /// Check point for score manager
         /// </summary>
         private void CheckPoint(){
-            if(scoreManager.ScoreValue >= 500){
+            if(scoreManager.ScoreValue >= 1500){
                 speed = 2f;
-            } else if(scoreManager.ScoreValue >= 300){
+            } else if(scoreManager.ScoreValue >= 1000){
                 speed = 1f;
-            } else if(scoreManager.ScoreValue >= 200){
+            } else if(scoreManager.ScoreValue >= 500){
                 speed = 0.8f;
-            } else if(scoreManager.ScoreValue >= 100){
+            } else if(scoreManager.ScoreValue >= 200){
                 speed = 0.5f;
             }
         }

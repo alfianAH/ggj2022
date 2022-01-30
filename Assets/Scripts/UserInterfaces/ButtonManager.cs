@@ -1,6 +1,5 @@
 using Box;
 using Gameplay;
-using UnityEngine;
 
 namespace UserInterfaces
 {
@@ -33,7 +32,7 @@ namespace UserInterfaces
                 // Add score
                 combo += 1;
                 scoreManager.UpdateScore(scoreManager.ScoreValue + 10*combo);
-
+                UltimateBox.Instance.AddPower(combo);
                 // Destroy cube
                 boxManager.RemoveBox();
             } else {
@@ -41,6 +40,10 @@ namespace UserInterfaces
                 combo = 0;
                 healthManager.ReduceHealth();
             }
+        }
+
+        public void StartUltimate(){
+            StartCoroutine(UltimateBox.Instance.StartUltimate());
         }
     }
 }
