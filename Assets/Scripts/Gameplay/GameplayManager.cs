@@ -26,6 +26,7 @@ namespace Gameplay
             foreach(BoxSprite boxSprite in boxSprites){
                 if(boxSprite.boxPersonality == boxPersonality){
                     removeButtonSprite.sprite = boxSprite.personalitySprite;
+                    removeButtonSprite.enabled = true;
                 }
             }
             StartCoroutine(FadingEffect.FadeOut(choosePanel));
